@@ -21,6 +21,7 @@
   $backupInputFile      = true;
   $onErrorUseOriginal   = true;
   $echoOutput           = false;
+  $mindiskspace         = 1073741824;
 
 /*
   Internal Store
@@ -30,7 +31,15 @@
   $host_ip              = null;
   $host_dns             = null;
   $host_result          = null;
+  $diskspace            = null;
 
+/*
+  Check disk space
+  */
+  $diskspace = disk_free_space("/");
+  if( $diskspace <= $mindiskspace){
+    exit("Disk space is below minimum threshold ($diskspace)");
+  }
 /*
   Open, read, parse, write, echo
  */
